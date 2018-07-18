@@ -4,12 +4,12 @@ import { Button, List } from 'antd-mobile';
 
 import './redux'
 
-import {addNum} from './react.redux'
 
 class App extends React.Component{
   render(){
     const name = 'chmi'
     const store = this.props.store
+    const addNum = this.props.addNum
     const num = store.getState()
     console.log(store)
     return (
