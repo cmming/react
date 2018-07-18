@@ -2,15 +2,25 @@ import React from 'react';
 
 import { Button, List } from 'antd-mobile';
 
+import './redux'
+
+import {addNum} from './react.redux'
+
 class App extends React.Component{
   render(){
     const name = 'chmi'
+    const store = this.props.store
+    const num = store.getState()
+    console.log(store)
     return (
       <div>
          <h2>hello,{name}!</h2>
+         <Button onClick = {()=>{store.dispatch(addNum())}}>添加</Button>
+         <h2>数字为：{num}</h2>
          <Age age = "26"></Age>
          <Demof age1="33"></Demof>
          <Likes></Likes>
+         <Reduxdemo></Reduxdemo>
       </div>
     )
   }
@@ -51,6 +61,17 @@ class Likes extends React.Component{
           </List>
           </div>
       )
+  }
+}
+
+// 使用redux 的组件
+
+class Reduxdemo extends React.Component{
+  render(){
+    const store = this.props
+    console.log(store)
+    // const num = store.getState()
+    return <h1>1</h1>
   }
 }
 export default App;

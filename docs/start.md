@@ -19,5 +19,9 @@
 
 mongod --config /usr/local/etc/mongod.conf
 
+## 使用状态管理工具 redux
+
+    cnpm install redux --save
+
 
 
