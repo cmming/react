@@ -4,20 +4,24 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import {createStore} from 'redux'
+import {createStore,applyMiddleware,compose} from 'redux'
+import thunk from 'redux-thunk'
 import {counter} from './react.redux'
-import {addNum} from './react.redux'
+import {addNum,addNumAnsy} from './react.redux'
 
-const store = createStore(counter)
+const store = createStore(counter,compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension?window.devToolsExtension():()=>{}
+))
  
 // function render() {
 //     ReactDOM.render(<App store={store}/>, document.getElementById('root'));
 // }
-ReactDOM.render(<App store={store} addNum={addNum} />, document.getElementById('root'));
+ReactDOM.render(<App store={store} addNum={addNum} addNumAnsy={addNumAnsy} />, document.getElementById('root'));
 registerServiceWorker();
 
 // render();
 // 添加事件订阅
 store.subscribe(()=>{
-    ReactDOM.render(<App store={store} addNum={addNum} />, document.getElementById('root'));
+    ReactDOM.render(<App store={store} addNum={addNum} addNumAnsy={addNumAnsy} />, document.getElementById('root'));
 })

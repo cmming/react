@@ -7,6 +7,8 @@ export function counter(state = 0,action){
     switch(action.type){
         case'加数字':
         return state+1
+        case'加数字':
+        return state+1
         case '减数字':
         return state-1
         default:
@@ -22,4 +24,12 @@ export function addNum(){
 
 export function delNum(){
     return {type:DEL_NUM}
+}
+
+export function addNumAnsy(){
+    return dispatch=>{
+        setTimeout(()=>{
+            dispatch(addNum())
+        },2000)
+    } 
 }

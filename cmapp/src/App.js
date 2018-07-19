@@ -10,12 +10,14 @@ class App extends React.Component{
     const name = 'chmi'
     const store = this.props.store
     const addNum = this.props.addNum
+    const addNumAnsy = this.props.addNumAnsy
     const num = store.getState()
     console.log(store)
     return (
       <div>
          <h2>hello,{name}!</h2>
          <Button onClick = {()=>{store.dispatch(addNum())}}>添加</Button>
+         <Button onClick = {()=>{store.dispatch(addNumAnsy())}}>延迟添加</Button>
          <h2>数字为：{num}</h2>
          <Age age = "26"></Age>
          <Demof age1="33"></Demof>

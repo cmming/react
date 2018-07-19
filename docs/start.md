@@ -23,5 +23,9 @@ mongod --config /usr/local/etc/mongod.conf
 
     cnpm install redux --save
 
+## 异步使用redux，全局方式使用redux 避免陷入属性层层传递的无底洞 (中间件机制)
+
+    cnpm install redux-thunk --save
+
 
 
