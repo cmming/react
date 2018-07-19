@@ -27,5 +27,12 @@ mongod --config /usr/local/etc/mongod.conf
 
     cnpm install redux-thunk --save
 
+## 使用 react-redux   简化redux的使用流程 （provider和connect）
+
+    provider 传入store
+    connect 从外部获取组件需要的参数 （使用装饰器的方式书写）
+
+    cnpm install react-redux --save
+
 
 

@@ -7,8 +7,6 @@ export function counter(state = 0,action){
     switch(action.type){
         case'加数字':
         return state+1
-        case'加数字':
-        return state+1
         case '减数字':
         return state-1
         default:
