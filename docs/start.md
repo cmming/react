@@ -38,4 +38,16 @@ mongod --config /usr/local/etc/mongod.conf
     cnpm install babel-plugin-transform-decorators-legacy --save-dev
 
 
+## Redux-router4
+
+    cnpm install react-router-dom --save (网页端)
+
+    exact(完全匹配)
+
+    BrowserRouter router-app root render
+
+    Link menu
+
+    Route contentContainer
+
 
