@@ -7,7 +7,16 @@ import { addNum, addNumAnsy } from './react.redux'
 
 import './redux'
 
+// const mapStatetoProps = (state) => {
+//   return { num: state }
+// }
 
+// const actionCreators = { addNum, addNumAnsy }
+
+// App = connect(mapStatetoProps, actionCreators)(App)
+@connect(
+  state => ({ num: state }), { addNum, addNumAnsy }
+)
 class App extends React.Component {
   render() {
     const name = 'chmi'
@@ -75,11 +84,12 @@ class Reduxdemo extends React.Component {
   }
 }
 
-const mapStatetoProps = (state) => {
-  return { num: state }
-}
+// const mapStatetoProps = (state) => {
+//   return { num: state }
+// }
 
-const actionCreators = { addNum, addNumAnsy }
+// const actionCreators = { addNum, addNumAnsy }
 
-App = connect(mapStatetoProps, actionCreators)(App)
+// // App = connect(mapStatetoProps, actionCreators)(App)
+// @connect(mapStatetoProps, actionCreators)
 export default App;

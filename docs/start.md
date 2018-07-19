@@ -34,5 +34,8 @@ mongod --config /usr/local/etc/mongod.conf
 
     cnpm install react-redux --save
 
+## 装饰器插件  (// 把装饰器语法转成es5)
+    cnpm install babel-plugin-transform-decorators-legacy --save-dev
+
 
 
