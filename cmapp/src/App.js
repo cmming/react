@@ -15,14 +15,14 @@ import './redux'
 
 // App = connect(mapStatetoProps, actionCreators)(App)
 @connect(
-  state => ({ num: state }), { addNum, addNumAnsy }
+  state => ({ num: state.counter,auth:state.auth }), { addNum, addNumAnsy }
 )
 class App extends React.Component {
   render() {
     const name = 'chmi'
     return (
       <div>
-        <h2>hello,{name}!</h2>
+        <h2>hello,{this.props.auth.user}!</h2>
         <Button onClick={this.props.addNum}>添加</Button>
         <Button onClick={this.props.addNumAnsy}>延迟添加</Button>
         <h2>数字为：{this.props.num}</h2>
@@ -84,12 +84,4 @@ class Reduxdemo extends React.Component {
   }
 }
 
-// const mapStatetoProps = (state) => {
-//   return { num: state }
-// }
-
-// const actionCreators = { addNum, addNumAnsy }
-
-// // App = connect(mapStatetoProps, actionCreators)(App)
-// @connect(mapStatetoProps, actionCreators)
 export default App;

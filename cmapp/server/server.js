@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 //创建数据库连接
 const DB_URL = 'mongodb://127.0.0.1:27017/imooc'
 
-mongoose.connect(DB_URL);
+mongoose.connect(DB_URL,{ useNewUrlParser: true });
 mongoose.connection.on('connected',function(){
     console.log('mongo connect success')
 })
@@ -16,16 +16,16 @@ const User = mongoose.model('user',new mongoose.Schema({
 }))
 
 //添加数据
-User.create({
-    user:'xiaoming123',
-    age:16
-},(err,doc)=>{
-    if(!err){
-        console.log(doc)
-    }else{
-        console.log(err)
-    }
-})
+// User.create({
+//     user:'xiaoming123',
+//     age:16
+// },(err,doc)=>{
+//     if(!err){
+//         console.log(doc)
+//     }else{
+//         console.log(err)
+//     }
+// })
 //修改 update
 
 // User.update({'user':'xiaohua'},{'$set':{age:26}},function(err,doc){
@@ -50,12 +50,12 @@ app.get('/',(req,res)=>{
 })
 
 app.get('/json',(req,res)=>{
-    User.find({},(err,doc)=>{
-        res.json(doc)
-    })
-    // res.json({name:'chmi',age:'25'})
+    // User.find({},(err,doc)=>{
+    //     res.json(doc)
+    // })
+    res.json({user:'陈明',age:'25'})
 })
 
-app.listen(9093,()=>{
-    console.log('9093')  
+app.listen(9094,()=>{
+    console.log('9094')  
 })

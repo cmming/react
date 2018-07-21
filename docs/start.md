@@ -51,3 +51,12 @@ mongod --config /usr/local/etc/mongod.conf
     Route contentContainer
 
 
+## 数据请求 axios
+
+    cnpm install axios --save 
+
+    端口转发
+
+    "proxy":"http://localhost:9093"
+
+
