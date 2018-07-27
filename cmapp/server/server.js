@@ -1,19 +1,22 @@
 const express = require('express')
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
+
+const UserRouter = require('./user')
+
 
 //创建数据库连接
-const DB_URL = 'mongodb://127.0.0.1:27017/imooc'
+// const DB_URL = 'mongodb://127.0.0.1:27017/imooc'
 
-mongoose.connect(DB_URL,{ useNewUrlParser: true });
-mongoose.connection.on('connected',function(){
-    console.log('mongo connect success')
-})
+// mongoose.connect(DB_URL,{ useNewUrlParser: true });
+// mongoose.connection.on('connected',function(){
+//     console.log('mongo connect success')
+// })
 
-//创建数据库的模型
-const User = mongoose.model('user',new mongoose.Schema({
-    user:{type:String,require:true},
-    age:{type:Number,require:true}
-}))
+// //创建数据库的模型
+// const User = mongoose.model('user',new mongoose.Schema({
+//     user:{type:String,require:true},
+//     age:{type:Number,require:true}
+// }))
 
 //添加数据
 // User.create({
@@ -45,17 +48,19 @@ const User = mongoose.model('user',new mongoose.Schema({
 
 const app = express()
 
-app.get('/',(req,res)=>{
-    res.send('<h1>chmi</h1>')
-})
+app.use('/user', UserRouter)
 
-app.get('/json',(req,res)=>{
-    // User.find({},(err,doc)=>{
-    //     res.json(doc)
-    // })
-    res.json({user:'陈明',age:'25'})
-})
+// app.get('/', (req, res) => {
+//     res.send('<h1>chmi</h1>')
+// })
 
-app.listen(9094,()=>{
-    console.log('9094')  
+// app.get('/json',(req,res)=>{
+//     // User.find({},(err,doc)=>{
+//     //     res.json(doc)
+//     // })
+//     res.json({user:'陈明',age:'25'})
+// })
+
+app.listen(9094, () => {
+    console.log('node app start port 9094')
 })

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App'
 
 
 import registerServiceWorker from './registerServiceWorker';
@@ -11,7 +10,13 @@ import reducers from './store/reducers'
 
 import { Provider } from 'react-redux'
 
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
+
+
+import login from './views/login'
+import Register from './views/register'
+import AuthRoute from './component/authroute/index'
+import './style/style.css'
 
 
 // 配合浏览器的插件使用
@@ -20,11 +25,19 @@ const store = createStore(reducers, compose(
     window.devToolsExtension ? window.devToolsExtension() : () => { }
 ))
 
+function boss(){return(
+    <h2>boss</h2>
+)}
 
 ReactDOM.render(
     (<Provider store={store}>
         <BrowserRouter>
-        <App></App>
+            <div>
+                <AuthRoute></AuthRoute>
+                <Route path="/boss" component={boss}></Route>
+                <Route path="/login" component={login}></Route>
+                <Route path="/register" component={Register}></Route>
+            </div>
         </BrowserRouter>
     </Provider>),
     document.getElementById('root'));
