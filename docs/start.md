@@ -60,3 +60,12 @@ mongod --config /usr/local/etc/mongod.conf
     "proxy":"http://localhost:9093"
 
 
+## node 后台的使用
+    cnpm install body-parser -S //解析post的请求参数
+
+    cnpm install utility -S   //三方函数库
+
+    sudo cnpm install cookie-parser -s //cookie  解析工具
+    
+
+

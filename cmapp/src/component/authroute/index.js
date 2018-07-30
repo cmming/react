@@ -2,35 +2,37 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-import { getUserData } from '../../store/user'
+import { userData } from '../../store/user'
 
-import { getUserInfoApi } from '../../api/user'
+import { userInfo } from '../../api/user'
 
 @withRouter
 @connect(
-    state => state.auth,
-    { getUserData }
+    state => state.user,
+    { userData }
 )
 class AuthRoute extends React.Component {
 
     componentDidMount() {
-        const pathname = this.props.location.pathname
-        const whiteList = ['/login', '/register']
-        if (whiteList.indexOf(pathname) > -1) {
-            return null
-        }
+
 
         // this.props.getUserData()
 
-        getUserInfoApi().then(res => {
-            if (res.data.code !== 200) {
-                this.props.history.push('/login')
+        userInfo().then(res => {
+            if (res.data.code !== 0) {
+                const pathname = this.props.location.pathname
+                const whiteList = ['/login', '/register']
+
+                if (whiteList.indexOf(pathname) > -1) {
+                    this.props.history.push(pathname)
+                    // return null
+                }
+                
+            } else {
+                this.props.userData(res.data.data)
+                this.props.history.push('/' + this.props.type + 'info')
             }
         })
-
-        // .then(res=>{
-        //     console.log(this.props)
-        // })
 
 
     }
@@ -40,11 +42,7 @@ class AuthRoute extends React.Component {
     //用户的type
     //用户是否完善个人信息
     render() {
-        return (
-            <div>
-                判断跳转 11{this.props.code}
-            </div>
-        )
+        return null
     }
 }
 

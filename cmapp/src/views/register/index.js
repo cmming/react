@@ -1,8 +1,18 @@
 import React from 'react'
 
 import Logo from '../../component/logo/index'
-import { Toast,List, InputItem, WingBlank, WhiteSpace, Button, Radio, Flex } from 'antd-mobile';
+import { Toast, List, InputItem, WingBlank, WhiteSpace, Button, Radio, Flex } from 'antd-mobile';
 
+import { connect } from 'react-redux'
+import { register } from '../../store/user'
+import { Redirect } from 'react-router-dom'
+import AuthRoute from '../../component/authroute/index'
+
+
+@connect(
+    state => state.user,
+    { register }
+)
 class Register extends React.Component {
     constructor(props) {
         super(props)
@@ -10,9 +20,8 @@ class Register extends React.Component {
         this.state = {
             user: '',
             pwd: '',
-            confirmPwd: '',
-            type: 'genius',
-            // hasError: false
+            repeatpwd: '',
+            type: 'genius'
         }
         this.login = this.login.bind(this)
         this.register = this.register.bind(this)
@@ -22,23 +31,12 @@ class Register extends React.Component {
         this.props.history.push('/login')
     }
     register() {
-        console.log(this.state)
+        this.props.register(this.state)
+        if (this.props.msg) {
+            Toast.fail(this.props.msg, 1);
+        }
     }
-    // onErrorClick = () => {
-    //     if (this.state.hasError) {
-    //         Toast.info('Please enter 11 digits');
-    //     }
-    // }
     handleChangeVal(key, val) {
-        // if (val.replace(/\s/g, '').length < 11) {
-        //     this.setState({
-        //         hasError: true,
-        //     });
-        // } else {
-        //     this.setState({
-        //         hasError: false,
-        //     });
-        // }
         this.setState({
             [key]: val
         })
@@ -50,21 +48,23 @@ class Register extends React.Component {
 
         return (
             <div>
+                <AuthRoute></AuthRoute>
+                {this.props.isDirectTo ? <Redirect to={this.props.isDirectTo} /> : null}
                 <Logo></Logo>
-                <h2>注册页面</h2>
                 <WingBlank>
+                    <h2>注册页面</h2>
                     <InputItem onChange={v => this.handleChangeVal('user', v)}>用户</InputItem>
                     <WhiteSpace />
-                    <InputItem 
-                    type='password' 
-                    placeholder="密码必须包含数字和字母" 
-                    value={this.state.pwd} 
-                    // error={this.state.hasError} 
-                    // onErrorClick={this.onErrorClick}
-                    onChange={v => this.handleChangeVal('pwd', v)}
+                    <InputItem
+                        type='password'
+                        placeholder="密码必须包含数字和字母"
+                        value={this.state.pwd}
+                        error={this.state.hasError}
+                        onErrorClick={this.onErrorClick}
+                        onChange={v => this.handleChangeVal('pwd', v)}
                     >密码</InputItem>
                     <WhiteSpace />
-                    <InputItem type='password' placeholder="确认密码" onChange={v => this.handleChangeVal('confirmPwd', v)}>确认密码</InputItem>
+                    <InputItem type='password' placeholder="确认密码" onChange={v => this.handleChangeVal('repeatpwd', v)}>确认密码</InputItem>
                     <WhiteSpace />
                     <List>
                         <RadioItem onChange={() => this.handleChangeVal('type', 'genius')} checked={this.state.type === 'genius'}>牛人</RadioItem>

@@ -17,6 +17,8 @@ import login from './views/login'
 import Register from './views/register'
 import AuthRoute from './component/authroute/index'
 import './style/style.css'
+import Bossinfo from './views/bossinfo/index'
+import Switch from '../node_modules/_react-router-dom@4.3.1@react-router-dom/Switch';
 
 
 // 配合浏览器的插件使用
@@ -25,18 +27,22 @@ const store = createStore(reducers, compose(
     window.devToolsExtension ? window.devToolsExtension() : () => { }
 ))
 
-function boss(){return(
-    <h2>boss</h2>
-)}
+function boss() {
+    return (
+        <h2>boss</h2>
+    )
+}
 
 ReactDOM.render(
     (<Provider store={store}>
         <BrowserRouter>
             <div>
                 <AuthRoute></AuthRoute>
-                <Route path="/boss" component={boss}></Route>
-                <Route path="/login" component={login}></Route>
-                <Route path="/register" component={Register}></Route>
+                <Switch>
+                    <Route path="/bossinfo" component={Bossinfo}></Route>
+                    <Route path="/login" component={login}></Route>
+                    <Route path="/register" component={Register}></Route>
+                </Switch>
             </div>
         </BrowserRouter>
     </Provider>),

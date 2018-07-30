@@ -1,5 +1,7 @@
 const express = require('express')
 // const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+const cookieParase = require('cookie-parser');
 
 const UserRouter = require('./user')
 
@@ -41,12 +43,10 @@ const UserRouter = require('./user')
 // })
 
 
-
-
-
-
-
 const app = express()
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded());
+app.use(cookieParase());
 
 app.use('/user', UserRouter)
 

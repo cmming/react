@@ -39,11 +39,20 @@ request.interceptors.response.use(
 
     res => {
         Toast.hide()
+       console.log(res.data,res.data.code!=0)
+       if(res.data.code!=0){
+        Toast.fail(res.data.msg, 1);
+       }else{
+        // Toast.success('操作成功', 1);
+       }
+        
         //对响应数据做些事
         if (res.data && !res.data.success) {}
         return res;
     },
     error => {
+        Toast.hide()
+        Toast.offline('请求错误 !!!', 1);
         return error;
     }
 );
