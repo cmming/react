@@ -27,9 +27,9 @@ export function userInfo(data) {
 }
 
 export function userDataUpdate(data) {
-    console.log(data)
     return request({
         url: '/user/update',
-        method: 'post'
+        method: 'post',
+        data
     })
 }

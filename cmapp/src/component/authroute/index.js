@@ -14,23 +14,17 @@ import { userInfo } from '../../api/user'
 class AuthRoute extends React.Component {
 
     componentDidMount() {
+        const pathname = this.props.location.pathname
+        const whiteList = ['/login', '/register']
 
-
+        if (whiteList.indexOf(pathname) > -1) {
+            this.props.history.push(pathname)
+        }
         // this.props.getUserData()
-
         userInfo().then(res => {
+            console.log(res)
             if (res.data.code !== 0) {
-                const pathname = this.props.location.pathname
-                const whiteList = ['/login', '/register']
-
-                if (whiteList.indexOf(pathname) > -1) {
-                    this.props.history.push(pathname)
-                    // return null
-                }
-                
-            } else {
-                this.props.userData(res.data.data)
-                this.props.history.push('/' + this.props.type + 'info')
+                this.props.history.push('/login')
             }
         })
 

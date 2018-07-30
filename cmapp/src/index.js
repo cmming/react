@@ -18,6 +18,7 @@ import Register from './views/register'
 import AuthRoute from './component/authroute/index'
 import './style/style.css'
 import Bossinfo from './views/bossinfo/index'
+import Geniusinfo from './views/geniusinfo/index'
 import Switch from '../node_modules/_react-router-dom@4.3.1@react-router-dom/Switch';
 
 
@@ -39,6 +40,7 @@ ReactDOM.render(
             <div>
                 <AuthRoute></AuthRoute>
                 <Switch>
+                    <Route path="/geniusinfo" component={Geniusinfo}></Route>
                     <Route path="/bossinfo" component={Bossinfo}></Route>
                     <Route path="/login" component={login}></Route>
                     <Route path="/register" component={Register}></Route>

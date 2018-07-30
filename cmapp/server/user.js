@@ -11,7 +11,7 @@ Router.get('/info', function (req, res) {
     if (!user_id) {
         return res.json({ code: 1, msg: '用户没有登陆' })
     }
-    
+
     User.findOne({ _id: user_id }, _filter, (err, doc) => {
         if (err) {
             return res.json({ code: 1, msg: '用户不存在请重新登陆' })
@@ -33,13 +33,13 @@ Router.post('/register', function (req, res) {
         }
         UserModel = new User({ user, pwd: md5Pwd(pwd), type })
 
-        UserModel.save(((e,d)=>{
-            if(e){
-                return res.json({code:1,msg:'注册失败'})
+        UserModel.save(((e, d) => {
+            if (e) {
+                return res.json({ code: 1, msg: '注册失败' })
             }
-            const {user,type,_id} = d
-            res.cookie('userid',_id)
-            return res.json({code:0,data:{user,type,_id}})
+            const { user, type, _id } = d
+            res.cookie('userid', _id)
+            return res.json({ code: 0, data: { user, type, _id } })
         }))
         // User.create({ user, pwd: md5Pwd(pwd), type }, (e, d) => {
         //     if (e) {
@@ -61,6 +61,22 @@ Router.post('/login', function (req, res) {
         res.cookie('userid', doc._id)
         console.log(doc)
         return res.json({ code: 0, data: doc })
+    })
+})
+
+Router.post('/update', function (req, res) {
+    const userid = req.cookies.userid
+    if (!userid) {
+        return res.json({ code: 1, msg: '用户没有登陆' })
+    }
+
+    const body = req.body
+    User.findByIdAndUpdate(userid, body, (err, doc) => {
+        const data = Object.assign({}, {
+            'user': doc.user,
+            'type': doc.type
+        }, body)
+        return res.json({ code: 0, data: data })
     })
 })
 

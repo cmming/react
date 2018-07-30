@@ -12,14 +12,12 @@ import { Redirect } from 'react-router-dom'
     state => state.user,
     { updateInfo }
 )
-export default class Bossinfo extends Component {
+export default class Geniusinfo extends Component {
     constructor(props) {
         super(props)
         this.state = {
             avatar: '',
             title: '',
-            company: '',
-            money: '',
             desc: ''
         }
         this.save = this.save.bind(this)
@@ -36,16 +34,14 @@ export default class Bossinfo extends Component {
         return (
             <div>
                 {this.props.isDirectTo ? <Redirect to={this.props.isDirectTo} /> : null}
-                <NavBar mode='dark'>BOSS完善信息页</NavBar>
+                <NavBar mode='dark'>牛人完善信息页</NavBar>
                 <AvatarSelector selectAvatar={(imgName => {
                     this.setState({
                         avatar: imgName
                     })
                 })}></AvatarSelector>
-                <InputItem onChange={v => this.handleChangeVal('title', v)}>职位</InputItem>
-                <InputItem onChange={v => this.handleChangeVal('company', v)}>公司名称</InputItem>
-                <InputItem onChange={v => this.handleChangeVal('money', v)}>职位薪资</InputItem>
-                <TextareaItem title="职位要求" rows={3} autoHeight onChange={v => this.handleChangeVal('desc', v)}></TextareaItem>
+                <InputItem onChange={v => this.handleChangeVal('title', v)}>求职岗位</InputItem>
+                <TextareaItem title="个人介绍" rows={3} autoHeight onChange={v => this.handleChangeVal('desc', v)}></TextareaItem>
                 <Button type="primary" onClick={this.save}>保存</Button>
             </div>
         )

@@ -7,7 +7,6 @@ import { Toast, InputItem, WingBlank, WhiteSpace, Button } from 'antd-mobile';
 import {connect} from 'react-redux'
 import { login } from '../../store/user'
 import { Redirect } from 'react-router-dom'
-import AuthRoute from '../../component/authroute/index'
 
 
 @connect(
@@ -44,7 +43,6 @@ class Login extends React.Component {
     render() {
         return (
             <div>
-                <AuthRoute></AuthRoute>
                 {this.props.isDirectTo ? <Redirect to={this.props.isDirectTo} /> : null}
                 <Logo></Logo>
                 <h2 >登陆页面</h2>

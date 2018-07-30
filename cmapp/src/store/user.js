@@ -63,7 +63,7 @@ export function login({ user, pwd }) {
         userLogin({ user, pwd })
             .then(res => {
                 if (res.status == 200 && res.data.code == 0) {
-                    dispatch(authSuccess({ user: res.data.data.user, type: res.data.data.type }))
+                    dispatch(authSuccess(res.data.data))
                 } else {
                     dispatch(errorMsg(res.data.msg))
                 }
@@ -84,7 +84,7 @@ export function updateInfo(data) {
         userDataUpdate(data)
             .then(res => {
                 if (res.status == 200 && res.data.code == 0) {
-                    dispatch(authSuccess({ user: res.data.data.user, type: res.data.data.type }))
+                    dispatch(authSuccess(res.data.data))
                 } else {
                     dispatch(errorMsg(res.data.msg))
                 }

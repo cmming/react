@@ -6,7 +6,6 @@ import { Toast, List, InputItem, WingBlank, WhiteSpace, Button, Radio, Flex } fr
 import { connect } from 'react-redux'
 import { register } from '../../store/user'
 import { Redirect } from 'react-router-dom'
-import AuthRoute from '../../component/authroute/index'
 
 
 @connect(
@@ -48,7 +47,6 @@ class Register extends React.Component {
 
         return (
             <div>
-                <AuthRoute></AuthRoute>
                 {this.props.isDirectTo ? <Redirect to={this.props.isDirectTo} /> : null}
                 <Logo></Logo>
                 <WingBlank>

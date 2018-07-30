@@ -66,6 +66,11 @@ mongod --config /usr/local/etc/mongod.conf
     cnpm install utility -S   //三方函数库
 
     sudo cnpm install cookie-parser -s //cookie  解析工具
+
+
+## 组建参数校验工具
+    prop-types
+    cnpm install prop-types -S
     
 
 

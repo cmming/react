@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import { Grid, List } from 'antd-mobile'
+import propTypes from 'prop-types'
 
 export default class AvatarSelector extends Component {
+    static propTypes = {
+        selectAvatar: propTypes.func.isRequired
+    }
     constructor(props) {
         super(props)
         this.state = {}
@@ -22,14 +26,13 @@ export default class AvatarSelector extends Component {
 
         return (
             <div>
-                <List renderHeader={()=>
+                <List renderHeader={() =>
                     gridHeader
                 }>
                     <Grid data={avatatImgs} columnNum="5" onClick={(elm) => {
                         this.setState(elm)
                         this.props.selectAvatar(elm.text)
                     }}></Grid>
-                    avatarSelector
                 </List>
             </div>
         )
