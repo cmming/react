@@ -76,6 +76,15 @@ mongod --config /usr/local/etc/mongod.conf
 ## cookies 开发依赖
 
     cnpm install browser-cookies --save
+
+
+
+## 函数式编程 
+
+
+## 高阶组件
+
+    
     
 
 

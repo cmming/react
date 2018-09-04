@@ -2,11 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Result, List, WhiteSpace, Modal, Toast } from 'antd-mobile'
 import browserCookie from 'browser-cookies'
+import { logoutSubmit } from '../../redux/user.redux'
+import { Redirect } from 'react-router-dom'
 
 
 
 @connect(
-    state => state.user
+    state => state.user,
+    { logoutSubmit }
 )
 export default class User extends Component {
     constructor(props) {
@@ -23,6 +26,7 @@ export default class User extends Component {
                     browserCookie.erase('userid')
                     Toast.info('退出成功', 1)
                     window.location.href = window.location.href
+                    this.props.logoutSubmit()
                 }
             },
         ])
@@ -56,6 +60,6 @@ export default class User extends Component {
                     <Item onClick={this.logout}>退出登录</Item>
                 </List>
             </div>
-        ) : null
+        ) : <Redirect to={this.props.redirectTo}></Redirect>
     }
 }

@@ -6,6 +6,40 @@ import {Redirect} from 'react-router-dom'
 import {login} from '../../redux/user.redux'
 
 
+
+
+//1.属性代理 2.反向继承
+function WapperHello (Comp){
+	class WaperCom extends React.Component{
+		componentDidMount(){
+			console.log('新增生命周期')
+		}
+		render(){
+			return (
+				<div>
+					<p>高阶组件</p>
+					<Comp {...this.props}></Comp>
+				</div>
+			)
+		}
+	}
+
+	return WaperCom
+}
+
+@WapperHello
+class Hello extends React.Component {
+	render() {
+		return (
+			<div>
+				hello chmi welcome react!!
+			</div>
+		)
+	}
+}
+
+// Hello = WapperHello(Hello)
+
 @connect(
 	state=>state.user,
 	{login}
@@ -34,6 +68,7 @@ class Login extends React.Component{
 	render(){
 		return (
 			<div>
+				<Hello></Hello>
 				{this.props.redirectTo? <Redirect to={this.props.redirectTo} />:null}
 				<Logo></Logo>
 				<WingBlank>
