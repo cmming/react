@@ -3,7 +3,7 @@ import ReactDom from 'react-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
-import { BrowserRouter, Route, Redirect,Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import Login from './container/login/login'
 import Register from './container/register/register'
@@ -17,7 +17,7 @@ import './index.css'
 
 const store = createStore(reducers, compose(
 	applyMiddleware(thunk),
-	window.devToolsExtension?window.devToolsExtension():f=>f
+	window.devToolsExtension ? window.devToolsExtension() : f => f
 ))
 
 // boss genius me msg 4个页面
@@ -27,7 +27,7 @@ ReactDom.render(
 			<div>
 				<AuthRoute></AuthRoute>
 				<Switch>
-					
+
 					<Route path='/bossinfo' component={BossInfo}></Route>
 					<Route path='/geniusinfo' component={GeniusInfo}></Route>
 					<Route path='/login' component={Login}></Route>

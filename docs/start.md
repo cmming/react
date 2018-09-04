@@ -71,6 +71,11 @@ mongod --config /usr/local/etc/mongod.conf
 ## 组建参数校验工具
     prop-types
     cnpm install prop-types -S
+
+
+## cookies 开发依赖
+
+    cnpm install browser-cookies --save
     
 
 
