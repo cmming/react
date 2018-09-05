@@ -85,6 +85,10 @@ mongod --config /usr/local/etc/mongod.conf
 ## 高阶组件
 
     
+
+## scoket.io
+
+npm install socket.io --save
     
 
 
