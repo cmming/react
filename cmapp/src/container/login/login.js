@@ -70,7 +70,7 @@ class Login extends React.Component{
 			<div>
 				<Hello></Hello>
 				{this.props.redirectTo? <Redirect to={this.props.redirectTo} />:null}
-				<Logo></Logo>
+				{/* <Logo></Logo> */}
 				<WingBlank>
 					<List>
 						{this.props.msg?<p className='error-msg'>{this.props.msg}</p>:null}
