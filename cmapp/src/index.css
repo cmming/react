@@ -21,3 +21,9 @@
 .am-tab-bar{
 	height: auto;
 }
+
+.fix-bottom{
+	position: fixed;
+	bottom: 0;
+	width: 100vw;
+}
