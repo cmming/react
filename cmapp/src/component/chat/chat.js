@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import { InputItem, List } from 'antd-mobile'
-const scoket = io('ws://localhost:9093')
+import { connect } from 'react-redux'
+import { getMsgList, sendmsg, recvMsg } from '../../redux/chat.redux'
+// const scoket = io('ws://localhost:9093')
 
+@connect(
+    state => state,
+    { getMsgList, sendmsg,recvMsg }
+)
 export default class Chat extends Component {
     constructor(props) {
         super(props)
@@ -10,12 +16,14 @@ export default class Chat extends Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
     componentDidMount() {
-        scoket.on('recmsg', (data) => {
-            console.log(data)
-            this.setState({
-                msg: [...this.state.msg, data.text]
-            })
-        })
+        this.props.getMsgList()
+        this.props.recvMsg()
+        // scoket.on('recmsg', (data) => {
+        //     console.log(data)
+        //     this.setState({
+        //         msg: [...this.state.msg, data.text]
+        //     })
+        // })
 
     }
     handleChange(key, val) {
@@ -24,15 +32,21 @@ export default class Chat extends Component {
         })
     }
     handleSubmit() {
-        console.log(this.state.text)
-        scoket.emit('sendmsg', { text: this.state.text })
+        // console.log(this.state.text)
+        // scoket.emit('sendmsg', { text: this.state.text })
+        // this.setState({ text: '' })
+        //发送消息
+        const from = this.props.user._id
+        const to = this.props.match.params.user
+        const msg = this.state.text
+        this.props.sendmsg({ from, to, msg })
         this.setState({ text: '' })
     }
     render() {
         return (
             <div>
-                {this.state.msg.map((v, k) => {
-                    return <p key={k}>{v}</p>
+                {this.props.chat.chatmsg.map((v, k) => {
+                    return <p key={k}>{v.content}</p>
                 })}
                 <div className='fix-bottom'>
                     <List>
