@@ -6,6 +6,7 @@ const model = require('./model')
 const User = model.getModel('user')
 const Chat = model.getModel('chat')
 const _filter = { 'pwd': 0, '__v': 0 }
+// Chat.remove({},function(e,d){})
 
 Router.get('/list', function (req, res) {
 	const { type } = req.query
@@ -17,16 +18,24 @@ Router.get('/list', function (req, res) {
 
 Router.get('/getmsgs', function (req, res) {
 
-	const user = req.cookies.user
+	const user = req.cookies.userid
+	const users = {}
 	console.log(user)
 	// var params = [{ from: user, to: user }]
-	Chat.find({},
+	User.find({}, function (req, res) {
+		
+		res.forEach(v => {
+			users[v._id] = { name: v.user, avatar: v.avatar }
+		});
+	})
+	Chat.find({ '$or': [{ from: user }, { to: user }] },
 		function (err, doc) {
 			if (!err) {
-				return res.json({ code: 0, msgs: doc })
+				return res.json({ code: 0, msgs: doc, users: users })
 			}
 		}
 	)
+
 })
 Router.post('/getmsgs ', function (req, res) {
 	console.log('msgok')

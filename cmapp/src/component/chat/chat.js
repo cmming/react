@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 // import io from 'socket.io-client'
-import { InputItem, List } from 'antd-mobile'
+import { InputItem, List, NavBar, Icon } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { getMsgList, sendmsg, recvMsg } from '../../redux/chat.redux'
 // const scoket = io('ws://localhost:9093')
 
 @connect(
     state => state,
-    { getMsgList, sendmsg,recvMsg }
+    { getMsgList, sendmsg, recvMsg }
 )
 export default class Chat extends Component {
     constructor(props) {
@@ -16,8 +16,11 @@ export default class Chat extends Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
     componentDidMount() {
-        this.props.getMsgList()
-        this.props.recvMsg()
+        if (this.props.chat.chatmsg.length == 0) {
+            this.props.getMsgList()
+            this.props.recvMsg()
+        }
+
         // scoket.on('recmsg', (data) => {
         //     console.log(data)
         //     this.setState({
@@ -43,10 +46,37 @@ export default class Chat extends Component {
         this.setState({ text: '' })
     }
     render() {
+        const userid = this.props.match.params.user
+        const Item = List.Item
+        console.log(userid, this.props.chat.users)
+        const users = this.props.chat.users
+        if (!users[userid]) {
+            return null
+        }
         return (
-            <div>
+            <div className="chat-page">
+                <NavBar mode='dark'
+                    icon={<Icon type="left" />}
+                    onLeftClick={() => this.props.history.goBack()}
+                >
+                    {users[userid]['name']}
+                </NavBar>
                 {this.props.chat.chatmsg.map((v, k) => {
-                    return <p key={k}>{v.content}</p>
+                    console.log(v.from)
+                    var avatarImg = require(`../img/${users[v.from].avatar}.png`)
+                    var html = v.from == userid ? '' : 'chat-me'
+                    var avatar = v.from == userid ? '' : avatarImg
+                    if (v.from !== userid) {
+                        return <List key={k}>
+                            <Item extra={<img src={avatar} />} className={html}>{v.content}</Item>
+                        </List>
+                    } else {
+                        return <List key={k}>
+                            <Item thumb={avatarImg} className={html}>{v.content}</Item>
+                        </List>
+                    }
+
+                    //  <p key={k}>{html}{v.content}?</p>
                 })}
                 <div className='fix-bottom'>
                     <List>
