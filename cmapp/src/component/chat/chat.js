@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 // import io from 'socket.io-client'
-import { InputItem, List, NavBar, Icon } from 'antd-mobile'
+import { InputItem, List, NavBar, Icon, Grid } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { getMsgList, sendmsg, recvMsg } from '../../redux/chat.redux'
+import { getChatId } from '../../util';
 // const scoket = io('ws://localhost:9093')
 
 @connect(
@@ -12,7 +13,7 @@ import { getMsgList, sendmsg, recvMsg } from '../../redux/chat.redux'
 export default class Chat extends Component {
     constructor(props) {
         super(props)
-        this.state = { text: '', msg: [] }
+        this.state = { text: '', msg: [], isShowEmoji: false }
         this.handleSubmit = this.handleSubmit.bind(this)
     }
     componentDidMount() {
@@ -45,10 +46,18 @@ export default class Chat extends Component {
         this.props.sendmsg({ from, to, msg })
         this.setState({ text: '' })
     }
+    fixCarousel() {
+        setTimeout(() => {
+            window.dispatchEvent(new Event('resize'))
+        })
+    }
     render() {
+        var emoji = '👣 👀 👂 👃 👅 👄 💋 👓 👔 👕 👖 👗 👘 👙 👚 👛 👜 👝 🎒 💼 👞 👟 👠 👡 👢 👑 👒 🎩 🎓 💄 💅 💍 🌂 😫 😴 😌 😛 😜 😝 😒 😓 😔 😕 😲 😷 😖 😞 😟 😤 😢 😭 😦 😧 😨 😬 😰 😱 😳 😵 😡 😠 😀 😁 😂 😃 😄 😅 😆 😉 😊 😋 😎 😍 😘 😗 😙 😚 😇 😐 😑 😶 😏 😣 😥 😯 😪 😫 😴 😌 😛 😜 😝 😒 😓 😔 😕 😲 😷 😖 😞 😟 😤 😢 😭 😦 😧 😨 😬 😰 😱 😳 😵 😡 😠'.split(' ').map(v => ({ text: v }))
         const userid = this.props.match.params.user
         const Item = List.Item
         console.log(userid, this.props.chat.users)
+        const chatId = getChatId(userid, this.props.user._id)
+        const chatMsgs = this.props.chat.chatmsg.filter(v => v.chatid === chatId)
         const users = this.props.chat.users
         if (!users[userid]) {
             return null
@@ -61,7 +70,7 @@ export default class Chat extends Component {
                 >
                     {users[userid]['name']}
                 </NavBar>
-                {this.props.chat.chatmsg.map((v, k) => {
+                {chatMsgs.map((v, k) => {
                     console.log(v.from)
                     var avatarImg = require(`../img/${users[v.from].avatar}.png`)
                     var html = v.from == userid ? '' : 'chat-me'
@@ -80,13 +89,35 @@ export default class Chat extends Component {
                 })}
                 <div className='fix-bottom'>
                     <List>
+
                         <InputItem
                             placeholder='请输入'
                             value={this.state.text}
                             onChange={v => this.handleChange('text', v)}
-                            extra={<span onClick={() => this.handleSubmit()}>发送</span>}
-                        >信息</InputItem>
+                            extra={<div>
+                                <span style={{ marginRight: 15 }} onClick={() => {
+                                    this.setState({ isShowEmoji: !this.state.isShowEmoji })
+                                    this.fixCarousel()
+                                }}>😀
+                                </span>
+                                <span onClick={() => this.handleSubmit()}>发送</span>
+                            </div>}
+                        >
+
+                            </InputItem>
                     </List>
+                    {this.state.isShowEmoji ? <Grid
+                        data={emoji}
+                        columnNum={9}
+                        carouselMaxRow={4}
+                        isCarousel={true}
+                        onClick={(el) => {
+                            this.setState({
+                                text: this.state.text + el.text
+                            })
+                        }}
+                    /> : null}
+
                 </div>
             </div>
 
