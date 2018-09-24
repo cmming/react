@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 // import io from 'socket.io-client'
 import { InputItem, List, NavBar, Icon, Grid } from 'antd-mobile'
 import { connect } from 'react-redux'
-import { getMsgList, sendmsg, recvMsg } from '../../redux/chat.redux'
+import { getMsgList, sendmsg, recvMsg, readMsg } from '../../redux/chat.redux'
 import { getChatId } from '../../util';
 // const scoket = io('ws://localhost:9093')
 
 @connect(
     state => state,
-    { getMsgList, sendmsg, recvMsg }
+    { getMsgList, sendmsg, recvMsg, readMsg }
 )
 export default class Chat extends Component {
     constructor(props) {
@@ -29,6 +29,11 @@ export default class Chat extends Component {
         //     })
         // })
 
+
+    }
+    componentWillUnmount() {
+        var from = this.props.match.params.user
+        this.props.readMsg(from)
     }
     handleChange(key, val) {
         this.setState({
@@ -104,7 +109,7 @@ export default class Chat extends Component {
                             </div>}
                         >
 
-                            </InputItem>
+                        </InputItem>
                     </List>
                     {this.state.isShowEmoji ? <Grid
                         data={emoji}

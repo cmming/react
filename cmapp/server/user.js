@@ -23,7 +23,7 @@ Router.get('/getmsgs', function (req, res) {
 	console.log(user)
 	// var params = [{ from: user, to: user }]
 	User.find({}, function (req, res) {
-		
+
 		res.forEach(v => {
 			users[v._id] = { name: v.user, avatar: v.avatar }
 		});
@@ -47,6 +47,19 @@ Router.post('/getmsgs ', function (req, res) {
 	// 		}
 	// 	}
 	// })
+})
+Router.post('/readmsg', function (req, res) {
+	const userid = req.cookies.userid
+	const { from } = req.body
+	console.log(userid, from, { from, to: userid })
+	Chat.update({ from, to: userid }, { '$set': { read: true } }, { 'multi': true }, function (err, doc) {
+		// console.log(doc)
+		if (!err) {
+			return res.json({ code: 0, num: doc.nModified })
+		} else {
+			return res.json({ code: 1, msg: '修改失敗' })
+		}
+	})
 })
 Router.post('/update', function (req, res) {
 	const userid = req.cookies.userid
