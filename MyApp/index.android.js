@@ -11,6 +11,7 @@ import {
   Text,
   View
 } from 'react-native';
+import setup from './js/pages/setup'
 
 export default class MyApp extends Component {
   render() {
@@ -50,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('MyApp', () => MyApp);
+AppRegistry.registerComponent('MyApp', () => setup);
