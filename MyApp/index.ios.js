@@ -117,4 +117,4 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('MyApp', () => MyApp);
+AppRegistry.registerComponent('MyApp', () => setup);
