@@ -55,6 +55,14 @@
     https://github.com/ptomasroos/react-native-scrollable-tab-view
     npm install react-native-scrollable-tab-view --save
     
+### react-native-parallax-scroll-view
+
+    https://github.com/i6mi6/react-native-parallax-scroll-view
+    
+    npm install react-native-parallax-scroll-view --save
+
+    页面上拉动态显示title
+    
     
 ### 
     

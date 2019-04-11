@@ -11,7 +11,8 @@ import {
     TextInput,
     ListView,
     RefreshControl,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    TouchableOpacity
 } from 'react-native';
 import NavigationBar from '../common/NavigationBar'
 import DataRepository,{FLAG_STORAGE} from '../expand/dao/DataRepository'
@@ -21,17 +22,24 @@ import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
 import RepositoryDetail from './RepositoryDetail'
 import FavoriteDao from '../expand/dao/FavoriteDao'
 import ProjectModel from '../model/ProjectModel'
+import SearchPage from './SearchPage'
 import Utils from '../util/Utils'
+import ViewUtils from '../util/ViewUtils'
+import {FLAG_TAB} from './HomePage'
+import MoreMenu,{MORE_MENU} from '../common/MoreMenu'
+import BaseComponent from './BaseComponent'
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
 var favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
 var dataRepository = new DataRepository(FLAG_STORAGE.flag_popular);
-export default class PopularPage extends Component {
+export default class PopularPage extends BaseComponent {
     constructor(props) {
         super(props);
         this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key);
         this.state = {
             languages: [],
+            theme:this.props.theme,
+            customThemeViewVisible: false,
         }
         this.loadLanguage();
     }
@@ -51,11 +59,52 @@ export default class PopularPage extends Component {
         });
     }
 
+    renderRightButton() {
+        return <View style={{flexDirection:'row'}}>
+            <TouchableOpacity
+                onPress={()=> {
+                    this.props.navigator.push({
+                        component:SearchPage,
+                        params:{
+                            ...this.props
+                        }
+                    })
+                }}
+            >
+                <View style={{padding:5,marginRight:8}}>
+                    <Image
+                        style={{width:24,height:24}}
+                        source={require('../../res/images/ic_search_white_48pt.png')}
+                    />
+                </View>
+
+            </TouchableOpacity>
+
+            {ViewUtils.getMoreButton(()=>this.refs.moreMenu.open())}
+        </View>
+    }
+
+    renderMoreView(){
+        let params={...this.props,fromPage:FLAG_TAB.flag_popularTab}
+        return <MoreMenu
+            ref="moreMenu"
+            {...params}
+            menus={[MORE_MENU.Custom_Key,MORE_MENU.Sort_Key,MORE_MENU.Remove_Key,MORE_MENU.Custom_Theme,
+                MORE_MENU.About_Author,MORE_MENU.About]}
+            anchorView={()=>this.refs.moreMenuButton}
+        />
+    }
+
     render() {
+        var statusBar={
+            backgroundColor: this.state.theme.themeColor
+        }
         let navigationBar =
             <NavigationBar
                 title={'最热'}
-                statusBar={{backgroundColor: "#2196F3"}}
+                statusBar={statusBar}
+                style={this.state.theme.styles.navBar}
+                rightButton={this.renderRightButton()}
             />;
         let content = this.state.languages.length > 0 ?
             <ScrollableTabView
@@ -76,6 +125,7 @@ export default class PopularPage extends Component {
         return <View style={styles.container}>
             {navigationBar}
             {content}
+            {this.renderMoreView()}
         </View>
     }
 }

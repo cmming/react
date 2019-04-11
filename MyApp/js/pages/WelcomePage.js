@@ -10,17 +10,34 @@ import {
 } from 'react-native'
 import NavigationBar from '../common/NavigationBar'
 import HomePage from './HomePage'
+import ThemeDao from '../expand/dao/ThemeDao'
+import SplashScreen from 'react-native-splash-screen'
 export default class WelcomePage extends Component {
     constructor(props) {
         super(props);
     }
 
+    // componentDidMount() {
+    //     this.timer=setTimeout(()=> {
+    //         this.props.navigator.resetTo({
+    //             component: HomePage,
+    //         });
+    //     }, 2000);
+    // }
+
     componentDidMount() {
+        new ThemeDao().getTheme().then((data)=>{
+            this.theme=data;
+        })
         this.timer=setTimeout(()=> {
+            // SplashScreen.hide();
             this.props.navigator.resetTo({
                 component: HomePage,
+                params:{
+                    theme:this.theme,
+                }
             });
-        }, 2000);
+        }, 500);
     }
     componentWillUnmount(){
         this.timer&&clearTimeout(this.timer);
